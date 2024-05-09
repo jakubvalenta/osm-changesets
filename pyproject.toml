@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "osm-pretty-rss"
+version = "0.1.0"
+description = "A website that provides pretty RSS/Atom feeds for OpenStreetMap user edits."
+authors = ["Jakub Valenta <jakub@jakubvalenta.cz>"]
+license = "GPLv3+"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.31.0"
+Django = "^5.0.6"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.10.0"
+flake8 = "^7.0.0"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
