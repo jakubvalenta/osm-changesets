@@ -34,7 +34,6 @@ class RssUserChangesetsFeed(Feed):
         )
         r.raise_for_status()
         data = r.json()
-        print(data)
         changesets = [
             Changeset(
                 comment=item.get("tags", {}).get("comment", ""),
