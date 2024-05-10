@@ -14,48 +14,10 @@
     <p>
       Create an RSS/Atom feed with the changesets of given OpenStreetMap user.
     </p>
-    <form action="javascript:void(0)">
-      <p>
-        <label for="uid">User ID</label>
-        <input type="text" id="uid" name="uid" />
-      </p>
-      <p>or</p>
-      <p>
-        <label for="user_name">User name</label>
-        <input type="text" id="user_name" name="user_name" />
-      </p>
-      <p>
-        <input type="radio" name="format" id="rss" checked />
-        <label for="rss">RSS 2.0</label>
-      </p>
-      <p>
-        <input type="radio" name="format" id="atom" />
-        <label for="atom">Atom</label>
-      </p>
-      <button type="submit">Create feed link</button>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Create feed">
     </form>
-    <p id="links"></p>
-    <script>
-      document.querySelector('form').addEventListener('submit', () => {
-        const userNameEl = document.getElementById('user_name');
-        const uidEl = document.getElementById('uid');
-        const userName = userNameEl.value;
-        if (userName) {
-          uid = 99999; // TODO
-          userNameEl.value = '';
-          uidEl.value = uid;
-        } else {
-          uid = document.getElementById('uid').value;
-        }
-        const format = document.getElementById('rss').checked ? 'rss' : 'atom';
-        const link = document.createElement('a');
-        link.href = `/feeds/${uid}.${format}`;
-        link.textContent = link.href;
-        const links = document.getElementById('links');
-        links.innerHTML = '';
-        links.appendChild(link);
-      });
-      document.documentElement.classList.remove('no-js');
-    </script>
   </body>
 </html>

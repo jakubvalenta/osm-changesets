@@ -1,81 +1,45 @@
 import datetime
-from dataclasses import dataclass
 
-import requests
 from django.contrib.syndication.views import Feed
-from django.shortcuts import render
-from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
 
-
-@dataclass
-class Changeset:
-    comment: str
-    created_at: datetime.datetime
-    id: int
-    max_lat: float
-    max_lon: float
-    min_lat: float
-    min_lon: float
-
-
-@dataclass
-class User:
-    uid: int
-    changesets: list[Changeset]
+from osm_pretty_rss.models import Changeset, User
 
 
 class RssUserChangesetsFeed(Feed):
-    def get_object(self, request, uid) -> User:
-        r = requests.get(
-            "https://api.openstreetmap.org/api/0.6/changesets",
-            headers={"Accept": "application/json"},
-            params={"user": uid},
-        )
-        r.raise_for_status()
-        data = r.json()
-        changesets = [
-            Changeset(
-                comment=item.get("tags", {}).get("comment", ""),
-                created_at=datetime.datetime.fromisoformat(item["created_at"]),
-                id=int(item["id"]),
-            )
-            for item in data.get("changesets", [])
-        ]
-        return User(uid=uid, changesets=changesets)
+    def get_object(self, request, pk: int) -> User:
+        return User.objects.get(uid=pk)
 
     def title(self, user: User) -> str:
-        return f"OpenStreetMap changesets by user {user.uid}"
+        return user.title
 
     def link(self, user: User) -> str:
-        return reverse("feed-rss", kwargs={"uid": user.uid})
+        return user.feed_rss_url
 
-    def items(self, user: User) -> list[Changeset]:
-        return user.changesets
-
-    def item_description(self, changeset: Changeset) -> str:
-        return f'<a href="https://www.openstreetmap.org/changeset/{changeset.id}">view changeset at openstreetmap.org</a>'
+    def items(self, user: User) -> list[Changeset]:  # TODO Return type
+        return user.changesets.all()
 
     def item_enclosure_url(self, changeset: Changeset) -> str:
-        return reverse("changeset-svg", kwargs={"id": changeset.id})
+        return changeset.svg.url  # TODO Absolute URL
 
     def item_enclosure_mime_type(self, changeset: Changeset) -> str:
         return "image/svg+xml"
 
+    def item_enclosure_length(self, changeset: Changeset) -> str:
+        return changeset.svg.size
+
     def item_link(self, changeset: Changeset) -> str:
-        return f"https://www.openstreetmap.org/changeset/{changeset.id}"
+        return changeset.osm_url
 
     def item_pubdate(self, changeset: Changeset) -> datetime.datetime:
         return changeset.created_at
 
     def item_title(self, changeset: Changeset) -> str:
-        return f"Changeset {changeset.id}" + (
-            f": {changeset.comment}" if changeset.comment else ""
-        )
+        return changeset.title
 
 
 class AtomUserChangesetsFeed(RssUserChangesetsFeed):
     feed_type = Atom1Feed
 
     def link(self, user: User) -> str:
-        return reverse("feed-atom", kwargs={"uid": user.uid})
+        return user.feed_atom_url

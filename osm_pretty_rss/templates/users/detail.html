@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{{ user.title }}</title>
+  </head>
+  <body>
+    <h1>{{ user.title }}</h1>
+    <p><a href="{{ user.feed_rss_url }}">RSS</a></p>
+    <p><a href="{{ user.feed_atom_url }}">Atom</a></p>
+    {% for changeset in user.changesets.all %}
+    <h2>{{ changeset.title }}</h2>
+    <img src="{{ changeset.svg.url }}" />
+    <p>{{ changeset.created_at }}</p>
+    <p>{{ changeset.osm_url }}</p>
+    {% empty %}
+    <li>No changesets yet.</li>
+    {% endfor %}
+  </body>
+</html>
