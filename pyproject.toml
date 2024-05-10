@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.12"
 requests = "^2.31.0"
 Django = "^5.0.6"
+py-staticmaps = {extras = ["cairo"], version = "^0.4.0"}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.10.0"

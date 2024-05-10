@@ -39,10 +39,6 @@ class RssUserChangesetsFeed(Feed):
                 comment=item.get("tags", {}).get("comment", ""),
                 created_at=datetime.datetime.fromisoformat(item["created_at"]),
                 id=int(item["id"]),
-                max_lat=float(item["max_lat"]),
-                max_lon=float(item["max_lon"]),
-                min_lat=float(item["min_lat"]),
-                min_lon=float(item["min_lon"]),
             )
             for item in data.get("changesets", [])
         ]
@@ -58,10 +54,19 @@ class RssUserChangesetsFeed(Feed):
         return user.changesets
 
     def item_description(self, changeset: Changeset) -> str:
-        return str(changeset)
+        return f'<a href="https://www.openstreetmap.org/changeset/{changeset.id}">view changeset at openstreetmap.org</a>'
+
+    def item_enclosure_url(self, changeset: Changeset) -> str:
+        return reverse("changeset-svg", kwargs={"id": changeset.id})
+
+    def item_enclosure_mime_type(self, changeset: Changeset) -> str:
+        return "image/svg+xml"
 
     def item_link(self, changeset: Changeset) -> str:
         return f"https://www.openstreetmap.org/changeset/{changeset.id}"
+
+    def item_pubdate(self, changeset: Changeset) -> datetime.datetime:
+        return changeset.created_at
 
     def item_title(self, changeset: Changeset) -> str:
         return f"Changeset {changeset.id}" + (
