@@ -6,18 +6,45 @@
     <title>OpenStreetMap Pretty RSS</title>
     <meta
       name="description"
-      content="Create an RSS/Atom feed with the changesets of given OpenStreetMap user."
+      content="A website that provides pretty RSS/Atom feeds for OpenStreetMap user changesets."
     />
   </head>
   <body>
     <h1>OpenStreetMap Pretty RSS</h1>
     <p>
-      Create an RSS/Atom feed with the changesets of given OpenStreetMap user.
+      This website allows you to create an RSS/Atom feed with the changesets of
+      a given OpenStreetMap user.
+    </p>
+    <p>
+      Each entry of the feed contains a pretty map showing the location where
+      the changes were made. See an
+      <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
+    </p>
+    <p>
+      The feed is refreshed whenever your feed reader polls it but not more
+      often than once per hour to be gentle to the OpenStreetMap API.
     </p>
     <form method="post">
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" value="Create feed">
+      {% csrf_token %} {{ create_form }}
+      <input type="submit" name="create" value="Create feed" />
     </form>
+    <form method="post">
+      {% csrf_token %} {{ find_form }}
+      <input type="submit" name="find" value="Find user" />
+    </form>
+    {% if found_users %}
+    <ul>
+      {% for found_user in found_users %}
+      <li>
+        {{ found_user.user_names|join:", " }} ({{ found_user.uid }})
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="uid" value="{{ found_user.uid }}" />
+          <input type="submit" name="create" value="Create feed" />
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </body>
 </html>

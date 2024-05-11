@@ -172,6 +172,22 @@ pycodestyle = ">=2.11.0,<2.12.0"
 pyflakes = ">=3.2.0,<3.3.0"
 
 [[package]]
+name = "flake8-pyproject"
+version = "1.2.3"
+description = "Flake8 plug-in loading the configuration from pyproject.toml"
+optional = false
+python-versions = ">= 3.6"
+files = [
+    {file = "flake8_pyproject-1.2.3-py3-none-any.whl", hash = "sha256:6249fe53545205af5e76837644dc80b4c10037e73a0e5db87ff562d75fb5bd4a"},
+]
+
+[package.dependencies]
+Flake8 = ">=5"
+
+[package.extras]
+dev = ["pyTest", "pyTest-cov"]
+
+[[package]]
 name = "future"
 version = "1.0.0"
 description = "Clean single-source support for Python 3 and 2"
@@ -386,7 +402,6 @@ files = [
 appdirs = "*"
 geographiclib = "*"
 PILLOW = "*"
-pycairo = {version = "*", optional = true, markers = "extra == \"cairo\""}
 python-slugify = "*"
 requests = "*"
 s2sphere = "*"
@@ -396,30 +411,6 @@ svgwrite = "*"
 cairo = ["pycairo"]
 dev = ["black", "flake8", "mypy", "pylint", "pytest", "twine"]
 examples = ["gpxpy"]
-
-[[package]]
-name = "pycairo"
-version = "1.26.0"
-description = "Python interface for cairo"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "pycairo-1.26.0-cp310-cp310-win32.whl", hash = "sha256:696ba8024d2827e66e088a6e05a3b0aea30d289476bcb2ca47c9670d40900a50"},
-    {file = "pycairo-1.26.0-cp310-cp310-win_amd64.whl", hash = "sha256:b6690a00fb225c19f42d76660e676aba7ae7cb18f3632cb02bce7f0d9b9c3800"},
-    {file = "pycairo-1.26.0-cp310-cp310-win_arm64.whl", hash = "sha256:1d54e28170a5e790269d9db4c195cca5152ff018ba7e330d0ed05d86ccc2ea7d"},
-    {file = "pycairo-1.26.0-cp311-cp311-win32.whl", hash = "sha256:5986b8da3e7de7ab931d7ad527938df38f75d3a3bdea2b515c786c5ca2c5093c"},
-    {file = "pycairo-1.26.0-cp311-cp311-win_amd64.whl", hash = "sha256:d374d9ec6d2f791bf57105d87a9028db1ef2b687848f64a524e447033eae7229"},
-    {file = "pycairo-1.26.0-cp311-cp311-win_arm64.whl", hash = "sha256:20a31af89d92ffd5fc60c08e65ff649f16e18621a14a40dbdb049fc74942d7a9"},
-    {file = "pycairo-1.26.0-cp312-cp312-win32.whl", hash = "sha256:d63929ab5a2f890a333f2f2f51de9f1c9fe20d1bddc982c2ca577b737448d72f"},
-    {file = "pycairo-1.26.0-cp312-cp312-win_amd64.whl", hash = "sha256:8616408ae93de4824a3777ec532ea75643e4bf74e49d601062c0b1788180c962"},
-    {file = "pycairo-1.26.0-cp312-cp312-win_arm64.whl", hash = "sha256:a611e4d82ad8470138bb46d465d47e8db826d9d80b6a520ccd83ee007f2073e4"},
-    {file = "pycairo-1.26.0-cp38-cp38-win32.whl", hash = "sha256:675578bc6d62d15ff8669f264783efc9c8c73e3a6f564b294a70fb45a2f78667"},
-    {file = "pycairo-1.26.0-cp38-cp38-win_amd64.whl", hash = "sha256:aac447b423b33b64119ecdd1ffebf9163b07f5401c5da50c707197efdd1c918a"},
-    {file = "pycairo-1.26.0-cp39-cp39-win32.whl", hash = "sha256:9fa51168010e2dfb45499df071fca2d921893f724646f3454951000a7ad0cabb"},
-    {file = "pycairo-1.26.0-cp39-cp39-win_amd64.whl", hash = "sha256:3e4e18ea03122e60abe3eb611e2849859cc950083ff85d8369328eadf3df63f5"},
-    {file = "pycairo-1.26.0-cp39-cp39-win_arm64.whl", hash = "sha256:a8f3b567ba2ad55624a809823ccf75aff8d768c20216cb5888365f6fc695c1d2"},
-    {file = "pycairo-1.26.0.tar.gz", hash = "sha256:2dddd0a874fbddb21e14acd9b955881ee1dc6e63b9c549a192d613a907f9cbeb"},
-]
 
 [[package]]
 name = "pycodestyle"
@@ -537,6 +528,20 @@ files = [
 ]
 
 [[package]]
+name = "types-requests"
+version = "2.31.0.20240406"
+description = "Typing stubs for requests"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "types-requests-2.31.0.20240406.tar.gz", hash = "sha256:4428df33c5503945c74b3f42e82b181e86ec7b724620419a2966e2de604ce1a1"},
+    {file = "types_requests-2.31.0.20240406-py3-none-any.whl", hash = "sha256:6216cdac377c6b9a040ac1c0404f7284bd13199c0e1bb235f4324627e8898cf5"},
+]
+
+[package.dependencies]
+urllib3 = ">=2"
+
+[[package]]
 name = "typing-extensions"
 version = "4.11.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -578,4 +583,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "8fe146929be2df6ee7759a6c531fd93ec25ed80a14b34be2020bf4972b889c9c"
+content-hash = "ca4149a0801f578832530a549cba4675663b274d662739e7deb95d4753325e51"

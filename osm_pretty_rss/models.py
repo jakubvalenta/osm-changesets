@@ -56,12 +56,11 @@ def changeset_upload_to(instance: "Changeset", filename: str) -> str:
 
 
 class User(models.Model):
+    uid = models.IntegerField(primary_key=True)
+
     MAX_CHANGESETS: int = 10
 
-    uid = models.IntegerField(primary_key=True)
-    user_name = models.CharField(max_length=255)
-
-    def refresh(self):
+    def refresh(self) -> None:
         r = requests.get(
             "https://api.openstreetmap.org/api/0.6/changesets",
             headers={"Accept": "application/json"},
