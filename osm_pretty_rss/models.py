@@ -10,7 +10,9 @@ from django.db import models, transaction
 from django.urls import reverse
 
 
-def render_changeset_svg(id: int) -> IO:
+def render_changeset_svg(
+    id: int, color: staticmaps.color.Color = staticmaps.color.BLUE, width: int = 2
+) -> IO:
     r = requests.get(
         f"https://api.openstreetmap.org/api/0.6/changeset/{id}",
         headers={"Accept": "application/json"},
@@ -28,7 +30,7 @@ def render_changeset_svg(id: int) -> IO:
 
     if min_lat == max_lat and min_lon == max_lon:
         context.add_object(
-            staticmaps.Marker(staticmaps.create_latlng(min_lat, min_lon))
+            staticmaps.Marker(staticmaps.create_latlng(min_lat, min_lon), color=color),
         )
     else:
         context.add_object(
@@ -40,8 +42,12 @@ def render_changeset_svg(id: int) -> IO:
                         (min_lat, max_lon),
                         (max_lat, max_lon),
                         (max_lat, min_lon),
+                        (min_lat, min_lon),
                     ]
                 ],
+                fill_color=staticmaps.color.TRANSPARENT,
+                color=color,
+                width=width,
             )
         )
 

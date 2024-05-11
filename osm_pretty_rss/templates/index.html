@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>OpenStreetMap Pretty RSS</title>
+    <title>OpenStreetMap Pretty Changesets</title>
     <meta
       name="description"
-      content="A website that provides pretty RSS/Atom feeds for OpenStreetMap user changesets."
+      content="A website that shows changests by an OpenStreetMap user with map images."
     />
   </head>
   <body>
-    <h1>OpenStreetMap Pretty RSS</h1>
+    <h1>OpenStreetMap Pretty Changests</h1>
     <p>
       This website allows you to create an RSS/Atom feed with the changesets of
       a given OpenStreetMap user.
@@ -32,6 +32,10 @@
       {% csrf_token %} {{ find_form }}
       <input type="submit" name="find" value="Find user" />
     </form>
+    <p>
+      The search feature is powered by
+      <a href="https://whosthat.osmz.ru/" target="blank">whosthat.osmz.ru</a>.
+    </p>
     {% if found_users %}
     <ul>
       {% for found_user in found_users %}
@@ -46,5 +50,10 @@
       {% endfor %}
     </ul>
     {% endif %}
+    <footer>
+      <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>
+      2024,
+      <a href="https://github.com/jakubvalenta/osm-pretty-changesets">code</a>
+    </footer>
   </body>
 </html>

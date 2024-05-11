@@ -3,7 +3,7 @@ from django import forms
 
 class CreateUserForm(forms.Form):
     uid = forms.IntegerField(
-        label="Specify a user id",
+        label="Enter a user id",
         widget=forms.TextInput(attrs={"placeholder": "4151758"}),
     )
 

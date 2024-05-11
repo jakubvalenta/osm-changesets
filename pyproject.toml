@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "osm-pretty-rss"
+name = "osm-pretty-changesets"
 version = "0.1.0"
-description = "A website that provides pretty RSS/Atom feeds for OpenStreetMap user changesets."
+description = "A website that shows changests by an OpenStreetMap user with map images."
 authors = ["Jakub Valenta <jakub@jakubvalenta.cz>"]
 license = "GPLv3+"
 readme = "README.md"

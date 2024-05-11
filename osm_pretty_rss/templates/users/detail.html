@@ -7,15 +7,13 @@
   </head>
   <body>
     <h1>{{ user.title }}</h1>
-    <p><a href="{{ user.feed_rss_url }}">RSS</a></p>
-    <p><a href="{{ user.feed_atom_url }}">Atom</a></p>
+    <p>Feed: <a href="{{ user.feed_rss_url }}">RSS</a>, <a href="{{ user.feed_atom_url }}">Atom</a></p>
     {% for changeset in user.changesets.all %}
     <h2>{{ changeset.title }}</h2>
+    <p><a href="{{ changeset.osm_url }}" target="blank">{{ changeset.created_at|date:"j M Y H:i" }}&#8599;</a></p>
     <img src="{{ changeset.svg.url }}" />
-    <p>{{ changeset.created_at }}</p>
-    <p>{{ changeset.osm_url }}</p>
     {% empty %}
-    <li>No changesets yet.</li>
+    <p>No changesets yet.</p>
     {% endfor %}
   </body>
 </html>
