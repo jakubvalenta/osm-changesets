@@ -3,39 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>OpenStreetMap Pretty Changesets</title>
+    <title>OpenStreetMap Changesets</title>
     <meta
       name="description"
       content="A website that shows changests by an OpenStreetMap user with map images."
     />
   </head>
   <body>
-    <h1>OpenStreetMap Pretty Changests</h1>
+    <h1>OpenStreetMap Changests</h1>
     <p>
-      This website allows you to create an RSS/Atom feed with the changesets of
-      a given OpenStreetMap user.
-    </p>
-    <p>
-      Each entry of the feed contains a pretty map showing the location where
-      the changes were made. See an
+      This website shows changests by an OpenStreetMap user with map images. See
+      an
       <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
     </p>
     <p>
-      The feed is refreshed whenever your feed reader polls it but not more
-      often than once per hour to be gentle to the OpenStreetMap API.
+      It also provides an RSS/Atom feed, which is refreshed everytime your feed
+      reader polls it but not more often than once per hour. See an
+      <a href="{% url 'user-feed-rss' pk=4151758 %}">example RSS feed</a>.
     </p>
     <form method="post">
       {% csrf_token %} {{ create_form }}
-      <input type="submit" name="create" value="Create feed" />
+      <input type="submit" name="create" value="Show changesets" />
     </form>
     <form method="post">
       {% csrf_token %} {{ find_form }}
       <input type="submit" name="find" value="Find user" />
     </form>
-    <p>
-      The search feature is powered by
-      <a href="https://whosthat.osmz.ru/" target="blank">whosthat.osmz.ru</a>.
-    </p>
     {% if found_users %}
     <ul>
       {% for found_user in found_users %}
@@ -44,16 +37,19 @@
         <form method="post">
           {% csrf_token %}
           <input type="hidden" name="uid" value="{{ found_user.uid }}" />
-          <input type="submit" name="create" value="Create feed" />
+          <input type="submit" name="create" value="Show changesets" />
         </form>
       </li>
       {% endfor %}
     </ul>
     {% endif %}
     <footer>
-      <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>
-      2024,
-      <a href="https://github.com/jakubvalenta/osm-changesets">code</a>
+      2024
+      <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>,
+      <a href="https://github.com/jakubvalenta/osm-changesets" target="blank"
+        >code</a
+      >, search powered by
+      <a href="https://whosthat.osmz.ru/" target="blank">whosthat.osmz.ru</a>
     </footer>
   </body>
 </html>

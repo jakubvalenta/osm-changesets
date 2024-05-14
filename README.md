@@ -1,6 +1,6 @@
-# OSM Pretty RSS
+# OpenStreetMap Changesets
 
-A website that provides pretty RSS/Atom feeds for OpenStreetMap user edits.
+A website that shows changests by an OpenStreetMap user with map images.
 
 ## Installation
 
