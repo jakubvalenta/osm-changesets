@@ -10,6 +10,6 @@ class CreateUserForm(forms.Form):
 
 class FindUserForm(forms.Form):
     user_name = forms.CharField(
-        label="Or find a user by their name",
+        label="Or find a user by name",
         widget=forms.TextInput(attrs={"placeholder": "Jakub Valenta"}),
     )

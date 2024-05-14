@@ -8,41 +8,62 @@
       name="description"
       content="A website that shows changests by an OpenStreetMap user with map images."
     />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'osm_changesets/main.css' %}"
+      type="text/css"
+      media="screen"
+    />
   </head>
   <body>
-    <h1>OpenStreetMap Changests</h1>
-    <p>
-      This website shows changests by an OpenStreetMap user with map images. See
-      an
-      <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
-    </p>
-    <p>
-      It also provides an RSS/Atom feed, which is refreshed everytime your feed
-      reader polls it but not more often than once per hour. See an
-      <a href="{% url 'user-feed-rss' pk=4151758 %}">example RSS feed</a>.
-    </p>
-    <form method="post">
-      {% csrf_token %} {{ create_form }}
-      <input type="submit" name="create" value="Show changesets" />
-    </form>
-    <form method="post">
-      {% csrf_token %} {{ find_form }}
-      <input type="submit" name="find" value="Find user" />
-    </form>
-    {% if found_users %}
-    <ul>
-      {% for found_user in found_users %}
-      <li>
-        {{ found_user.user_names|join:", " }} ({{ found_user.uid }})
+    <div class="container">
+      <section>
+        <h1>OpenStreetMap Changests</h1>
+        <p>
+          This website shows changests by an OpenStreetMap user with map images.
+          See an
+          <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
+        </p>
+        <p>
+          It also provides an RSS/Atom feed, which is refreshed every time your
+          feed reader polls it but not more often than once per hour. See an
+          <a href="{% url 'user-feed-rss' pk=4151758 %}">example RSS feed</a>.
+        </p>
+      </section>
+    </div>
+    <div class="container">
+      <section>
         <form method="post">
-          {% csrf_token %}
-          <input type="hidden" name="uid" value="{{ found_user.uid }}" />
-          <input type="submit" name="create" value="Show changesets" />
+          {% csrf_token %} {{ create_form.non_field_errors }}
+          <div>
+            {{ create_form.uid.as_field_group }}
+            <input type="submit" name="create" value="Show changesets" />
+          </div>
         </form>
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+        <form method="post">
+          {% csrf_token %} {{ find_form.non_field_errors }}
+          <div>
+            {{ find_form.user_name.as_field_group }}
+            <input type="submit" name="find" value="Find user" />
+          </div>
+        </form>
+        {% if found_users %}
+        <ul>
+          {% for found_user in found_users %}
+          <li>
+            {{ found_user.user_names|join:", " }} ({{ found_user.uid }})
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="uid" value="{{ found_user.uid }}" />
+              <input type="submit" name="create" value="Show changesets" />
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+    </div>
     <footer>
       2024
       <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>,

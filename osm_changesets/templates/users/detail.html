@@ -6,16 +6,42 @@
     <title>{{ user.title }}</title>
     <!-- TODO RSS link -->
     <!-- TODO Atom link -->
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'osm_changesets/main.css' %}"
+      type="text/css"
+      media="screen"
+    />
   </head>
   <body>
-    <h1>{{ user.title }}</h1>
-    <p>Feed: <a href="{{ user.feed_rss_url }}">RSS</a>, <a href="{{ user.feed_atom_url }}">Atom</a></p>
-    {% for changeset in user.changesets.all %}
-    <h2>{{ changeset.title }}</h2>
-    <p><a href="{{ changeset.osm_url }}" target="blank">{{ changeset.created_at|date:"j M Y H:i" }}&#8599;</a></p>
-    <img src="{{ changeset.svg.url }}" />
+    <div class="container">
+      <section>
+        <h1>{{ user.title }}</h1>
+        <p>
+          <a href="{{ user.feed_rss_url }}" class="button">RSS</a>
+          <a href="{{ user.feed_atom_url }}" class="button">Atom</a>
+        </p>
+        {% for changeset in user.changesets.all %}
+      </section>
+    </div>
+    <div class="container">
+      <section>
+        <h2>{{ changeset.title }}</h2>
+        <p>
+          <a href="{{ changeset.osm_url }}" target="blank"
+            >{{ changeset.created_at|date:"j M Y H:i" }}&#8599;</a
+          >
+        </p>
+        <img src="{{ changeset.svg.url }}" />
+      </section>
+    </div>
     {% empty %}
-    <p>No changesets yet.</p>
-    {% endfor %}
+    <div class="container">
+      <section>
+        <p>No changesets yet.</p>
+        {% endfor %}
+      </section>
+    </div>
   </body>
 </html>
