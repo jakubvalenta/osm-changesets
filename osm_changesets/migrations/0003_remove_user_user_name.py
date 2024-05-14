@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("osm_pretty_rss", "0002_alter_changeset_options_alter_changeset_created_at"),
+        ("osm_changesets", "0002_alter_changeset_options_alter_changeset_created_at"),
     ]
 
     operations = [

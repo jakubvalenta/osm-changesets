@@ -6,8 +6,8 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
 
-from osm_pretty_rss.forms import CreateUserForm, FindUserForm
-from osm_pretty_rss.models import User
+from osm_changesets.forms import CreateUserForm, FindUserForm
+from osm_changesets.models import User
 
 
 @dataclass

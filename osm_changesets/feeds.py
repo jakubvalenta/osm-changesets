@@ -3,7 +3,7 @@ import datetime
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 
-from osm_pretty_rss.models import Changeset, User
+from osm_changesets.models import Changeset, User
 
 
 class RssUserChangesetsFeed(Feed):

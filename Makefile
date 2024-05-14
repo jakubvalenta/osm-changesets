@@ -1,4 +1,4 @@
-_python_pkg = osm_pretty_rss
+_python_pkg = osm_changesets
 
 .PHONY: run
 run:  ## Start the development server

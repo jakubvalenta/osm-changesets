@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "osm-pretty-changesets"
+name = "osm-changesets"
 version = "0.1.0"
 description = "A website that shows changests by an OpenStreetMap user with map images."
 authors = ["Jakub Valenta <jakub@jakubvalenta.cz>"]

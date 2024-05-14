@@ -1,5 +1,5 @@
 """
-WSGI config for osm_pretty_rss project.
+WSGI config for osm_changesets project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "osm_pretty_rss.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "osm_changesets.settings")
 
 application = get_wsgi_application()

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from osm_pretty_rss.feeds import AtomUserChangesetsFeed, RssUserChangesetsFeed
+from osm_changesets.feeds import AtomUserChangesetsFeed, RssUserChangesetsFeed
 
 from . import views
 
