@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "osm-changesets"
 version = "0.1.0"
-description = "A website that shows changests by an OpenStreetMap user with map images."
+description = "A website that shows changesets by an OpenStreetMap user with map images."
 authors = ["Jakub Valenta <jakub@jakubvalenta.cz>"]
 license = "GPLv3+"
 readme = "README.md"

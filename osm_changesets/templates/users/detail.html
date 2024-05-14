@@ -33,7 +33,7 @@
             >{{ changeset.created_at|date:"j M Y H:i" }}&#8599;</a
           >
         </p>
-        <img src="{{ changeset.svg.url }}" />
+        <img src="{{ changeset.svg.url }}" alt="Map showing OpenStreetMap changeset {{ changeset.id }}" />
       </section>
     </div>
     {% empty %}

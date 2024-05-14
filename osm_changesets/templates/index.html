@@ -6,7 +6,7 @@
     <title>OpenStreetMap Changesets</title>
     <meta
       name="description"
-      content="A website that shows changests by an OpenStreetMap user with map images."
+      content="A website that shows changesets by an OpenStreetMap user with map images."
     />
     {% load static %}
     <link
@@ -16,13 +16,13 @@
       media="screen"
     />
   </head>
-  <body>
+  <body class="index">
     <div class="container">
       <section>
-        <h1>OpenStreetMap Changests</h1>
+        <h1>OpenStreetMap Changesets</h1>
         <p>
-          This website shows changests by an OpenStreetMap user with map images.
-          See an
+          This website shows changesets by an OpenStreetMap user with map
+          images. See an
           <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
         </p>
         <p>
@@ -49,18 +49,25 @@
           </div>
         </form>
         {% if found_users %}
-        <ul>
-          {% for found_user in found_users %}
-          <li>
-            {{ found_user.user_names|join:", " }} ({{ found_user.uid }})
-            <form method="post">
-              {% csrf_token %}
-              <input type="hidden" name="uid" value="{{ found_user.uid }}" />
-              <input type="submit" name="create" value="Show changesets" />
-            </form>
-          </li>
-          {% endfor %}
-        </ul>
+        <div class="found">
+          <ul>
+            <h2>Found users:</h2>
+            {% for found_user in found_users %}
+            <li>
+              <span
+                >{{ found_user.user_names|join:", " }}
+                <!-- prettier-ignore -->
+                ({{ found_user.uid }})</span
+              >
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="uid" value="{{ found_user.uid }}" />
+                <input type="submit" name="create" value="Show changesets" />
+              </form>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
         {% endif %}
       </section>
     </div>

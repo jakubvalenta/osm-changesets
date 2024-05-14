@@ -1,6 +1,6 @@
 # OpenStreetMap Changesets
 
-A website that shows changests by an OpenStreetMap user with map images.
+A website that shows changesets by an OpenStreetMap user with map images.
 
 ## Installation
 
