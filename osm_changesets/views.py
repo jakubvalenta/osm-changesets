@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 import requests
+from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic
@@ -64,6 +65,15 @@ def index(request: HttpRequest) -> HttpResponse:
 class UserDetailView(generic.DetailView):
     model = User
     template_name = "users/detail.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        queryset = self.object.changesets.all()
+        paginator = Paginator(queryset, User.MAX_CHANGESETS)
+        page = self.request.GET.get("page")
+        page_obj = paginator.get_page(page)
+        context = super().get_context_data(**kwargs)
+        context["page_obj"] = page_obj
+        return context
 
 
 class ChangesetDetailView(generic.DetailView):

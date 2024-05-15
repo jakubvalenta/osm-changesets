@@ -81,6 +81,7 @@ class User(models.Model):
             for changeset in self.changesets.filter().order_by("created_at")
         }
         new_changesets: Dict[int, Changeset] = {}
+        # TODO Save all changesets but generate their images only when polled.
         for item in data.get("changesets", [])[: self.MAX_CHANGESETS]:
             id = int(item["id"])
             if id in old_changesets:
@@ -131,7 +132,6 @@ class Changeset(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-        # TODO Pagination
 
     @property
     def title(self) -> str:
