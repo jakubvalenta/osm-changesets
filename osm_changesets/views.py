@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 import requests
-from django.db import IntegrityError
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views import generic

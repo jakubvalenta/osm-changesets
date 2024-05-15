@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.syndication.views import Feed
+from django.db.models import QuerySet
 from django.utils.feedgenerator import Atom1Feed
 
 from osm_changesets.models import Changeset, User
@@ -16,11 +17,11 @@ class RssUserChangesetsFeed(Feed):
     def link(self, user: User) -> str:
         return user.feed_rss_url
 
-    def items(self, user: User) -> list[Changeset]:  # TODO Return type
+    def items(self, user: User) -> QuerySet[Changeset]:
         return user.changesets.all()
 
     def item_enclosure_url(self, changeset: Changeset) -> str:
-        return changeset.svg.url  # TODO Absolute URL
+        return changeset.svg.url
 
     def item_enclosure_mime_type(self, changeset: Changeset) -> str:
         return "image/svg+xml"
