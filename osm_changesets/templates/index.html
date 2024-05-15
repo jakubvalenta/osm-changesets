@@ -21,14 +21,22 @@
       <section>
         <h1>OpenStreetMap Changesets</h1>
         <p>
-          This website shows changesets by an OpenStreetMap user with map
-          images. See an
-          <a href="{% url 'user-detail' pk=4151758 %}">example</a>.
+          This website shows changesets by an OpenStreetMap user as a simple
+          list with little maps; including an RSS/Atom feed.
         </p>
         <p>
-          It also provides an RSS/Atom feed, which is refreshed every time your
-          feed reader polls it but not more often than once per hour. See an
-          <a href="{% url 'user-feed-rss' pk=4151758 %}">example RSS feed</a>.
+          See
+          <a href="{% url 'user-detail' pk=4151758 %}">example changesets</a>
+          / <a href="{% url 'user-feed-rss' pk=4151758 %}">RSS</a> and compare
+          them to
+          <a href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
+            >openstreetmap.org changesets</a
+          >
+          /
+          <a
+            href="https://www.openstreetmap.org/user/Jakub%20Valenta/history/feed"
+            >RSS</a
+          >.
         </p>
       </section>
     </div>

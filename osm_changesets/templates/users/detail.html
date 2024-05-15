@@ -8,12 +8,14 @@
       rel="alternate"
       type="application/rss+xml"
       href="{{ user.feed_rss_url }}"
-      title="{{ user.title }} (RSS)" />
+      title="{{ user.title }} (RSS)"
+    />
     <link
       rel="alternate"
       type="application/atom+xml"
       href="{{ user.feed_atom_url }}"
-      title="{{ user.title }} (Atom)" />
+      title="{{ user.title }} (Atom)"
+    />
     {% load static %}
     <link
       rel="stylesheet"
@@ -30,18 +32,28 @@
           <a href="{{ user.feed_rss_url }}" class="button">RSS</a>
           <a href="{{ user.feed_atom_url }}" class="button">Atom</a>
         </p>
+        <p>
+          The RSS/Atom feed contains the last 10 items and is refreshed every
+          time you poll it but at most once per hour.
+        </p>
         {% for changeset in user.changesets.all %}
       </section>
     </div>
     <div class="container">
       <section>
-        <h2>{{ changeset.title }}</h2>
+        <h2>
+          <a href="{{ changeset.url }}">{{ changeset.title }}</a>
+        </h2>
+        <p>{{ changeset.created_at|date:"j M Y H:i" }}</p>
+        <img
+          src="{{ changeset.svg.url }}"
+          alt="Map showing OpenStreetMap changeset {{ changeset.id }}"
+        />
         <p>
-          <a href="{{ changeset.osm_url }}" target="blank"
-            >{{ changeset.created_at|date:"j M Y H:i" }}&#8599;</a
+          <a href="{{ changeset.osm_url }}"
+            >Go to changeset {{ changeset.id }} at openstreetmap.org</a
           >
         </p>
-        <img src="{{ changeset.svg.url }}" alt="Map showing OpenStreetMap changeset {{ changeset.id }}" />
       </section>
     </div>
     {% empty %}

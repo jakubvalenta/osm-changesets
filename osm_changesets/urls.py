@@ -11,4 +11,9 @@ urlpatterns = [
     path("users/<int:pk>", views.UserDetailView.as_view(), name="user-detail"),
     path("users/<int:pk>/feed.atom", AtomUserChangesetsFeed(), name="user-feed-atom"),
     path("users/<int:pk>/feed.rss", RssUserChangesetsFeed(), name="user-feed-rss"),
+    path(
+        "changesets/<int:pk>",
+        views.ChangesetDetailView.as_view(),
+        name="changeset-detail",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 from django.views import generic
 
 from osm_changesets.forms import CreateUserForm, FindUserForm
-from osm_changesets.models import User
+from osm_changesets.models import Changeset, User
 
 
 @dataclass
@@ -64,3 +64,8 @@ def index(request: HttpRequest) -> HttpResponse:
 class UserDetailView(generic.DetailView):
     model = User
     template_name = "users/detail.html"
+
+
+class ChangesetDetailView(generic.DetailView):
+    model = Changeset
+    template_name = "changesets/detail.html"

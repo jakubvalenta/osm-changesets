@@ -30,7 +30,7 @@ class RssUserChangesetsFeed(Feed):
         return changeset.svg.size
 
     def item_link(self, changeset: Changeset) -> str:
-        return changeset.osm_url
+        return changeset.url
 
     def item_pubdate(self, changeset: Changeset) -> datetime.datetime:
         return changeset.created_at

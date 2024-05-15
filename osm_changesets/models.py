@@ -67,6 +67,7 @@ class User(models.Model):
     MAX_CHANGESETS: int = 10
 
     def refresh(self) -> None:
+        # TODO Refresh when polled but not more often than once per hour.
         r = requests.get(
             "https://api.openstreetmap.org/api/0.6/changesets",
             headers={"Accept": "application/json"},
@@ -130,10 +131,15 @@ class Changeset(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        # TODO Pagination
 
     @property
     def title(self) -> str:
         return self.comment or str(self.id)
+
+    @property
+    def url(self) -> str:
+        return reverse("changeset-detail", kwargs={"pk": self.id})
 
     @property
     def osm_url(self) -> str:
