@@ -22,7 +22,7 @@ $ make setup
 
 Install these dependencies manually:
 
-- Python >= 3.12
+- Python >= 3.11
 - poetry
 
 Then run:
