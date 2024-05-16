@@ -11,7 +11,6 @@ python = "^3.11"
 requests = "^2.31.0"
 Django = "^5.0.6"
 py-staticmaps = "^0.4.0"
-django-unused-media = "^0.2.2"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.10.0"

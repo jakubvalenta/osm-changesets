@@ -17,15 +17,7 @@
       <section>
         <h1>{{ changeset.title }}</h1>
         <p>{{ changeset.created_at|date:"j M Y H:i" }}</p>
-        <img
-          src="{{ changeset.svg.url }}"
-          alt="Map showing OpenStreetMap changeset {{ changeset.id }}"
-        />
-        <p>
-          <a href="{{ changeset.osm_url }}"
-          >Go to changeset {{ changeset.id }} at openstreetmap.org</a
-                                                                  >
-        </p>
+        {% include "changesets/description.html" %}
       </section>
     </div>
   </body>

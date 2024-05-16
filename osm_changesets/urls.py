@@ -1,19 +1,47 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
 
-from osm_changesets.feeds import AtomUserChangesetsFeed, RssUserChangesetsFeed
-
-from . import views
+from osm_changesets import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("users/<int:pk>", views.UserDetailView.as_view(), name="user-detail"),
-    path("users/<int:pk>/feed.atom", AtomUserChangesetsFeed(), name="user-feed-atom"),
-    path("users/<int:pk>/feed.rss", RssUserChangesetsFeed(), name="user-feed-rss"),
     path(
-        "changesets/<int:pk>",
-        views.ChangesetDetailView.as_view(),
-        name="changeset-detail",
+        "changesets-by-uid/<int:uid>",
+        views.changeset_list,
+        name="changeset-list-by-uid",
     ),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path(
+        "changesets-by-display-name/<str:display_name>",
+        views.changeset_list,
+        name="changeset-list-by-display-name",
+    ),
+    path(
+        "changesets-by-uid/<int:uid>/<int:id>",
+        views.changeset_detail,
+        name="changeset-detail-by-uid",
+    ),
+    path(
+        "changesets-by-display-name/<str:display_name>/<int:id>",
+        views.changeset_detail,
+        name="changeset-detail-by-display-name",
+    ),
+    path(
+        "changesets-by-uid/<int:uid>/atom.xml",
+        views.AtomChangesetsFeed(),
+        name="changeset-list-by-uid-atom",
+    ),
+    path(
+        "changesets-by-display-name/<str:display_name>/atom.xml",
+        views.AtomChangesetsFeed(),
+        name="changeset-list-by-display-name-atom",
+    ),
+    path(
+        "changesets-by-uid/<int:uid>/rss.xml",
+        views.RssChangesetsFeed(),
+        name="changeset-list-by-uid-rss",
+    ),
+    path(
+        "changesets-by-display-name/<str:display_name>/rss.xml",
+        views.RssChangesetsFeed(),
+        name="changeset-list-by-display-name-rss",
+    ),
+]

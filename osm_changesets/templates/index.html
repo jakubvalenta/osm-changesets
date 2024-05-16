@@ -26,8 +26,8 @@
         </p>
         <p>
           See
-          <a href="{% url 'user-detail' pk=4151758 %}">example changesets</a>
-          / <a href="{% url 'user-feed-rss' pk=4151758 %}">RSS</a> and compare
+          <a href="{% url 'changeset-list-by-uid' 4151758 %}">example changesets</a>
+          / <a href="{% url 'changeset-list-by-uid-rss' 4151758 %}">RSS</a> and compare
           them to
           <a href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
             >openstreetmap.org changesets</a
@@ -43,40 +43,13 @@
     <div class="container">
       <section>
         <form method="post">
-          {% csrf_token %} {{ create_form.non_field_errors }}
+          {% csrf_token %} {{ form.non_field_errors }}
           <div>
-            {{ create_form.uid.as_field_group }}
+            {{ form.uid.as_field_group }}
+            {{ form.display_name.as_field_group }}
             <input type="submit" name="create" value="Show changesets" />
           </div>
         </form>
-        <form method="post">
-          {% csrf_token %} {{ find_form.non_field_errors }}
-          <div>
-            {{ find_form.user_name.as_field_group }}
-            <input type="submit" name="find" value="Find user" />
-          </div>
-        </form>
-        {% if found_users %}
-        <div class="found">
-          <ul>
-            <h2>Found users:</h2>
-            {% for found_user in found_users %}
-            <li>
-              <span
-                >{{ found_user.user_names|join:", " }}
-                <!-- prettier-ignore -->
-                ({{ found_user.uid }})</span
-              >
-              <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="uid" value="{{ found_user.uid }}" />
-                <input type="submit" name="create" value="Show changesets" />
-              </form>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
       </section>
     </div>
     <footer>
@@ -84,8 +57,7 @@
       <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>,
       <a href="https://github.com/jakubvalenta/osm-changesets" target="blank"
         >code</a
-      >, search powered by
-      <a href="https://whosthat.osmz.ru/" target="blank">whosthat.osmz.ru</a>
+      >
     </footer>
   </body>
 </html>

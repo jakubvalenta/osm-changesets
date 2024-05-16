@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{{ user.title }}</title>
+    <title>{{ query.title }}</title>
     <link
       rel="alternate"
       type="application/rss+xml"
-      href="{{ user.feed_rss_url }}"
-      title="{{ user.title }} (RSS)"
+      href="{{ query.rss_url }}"
+      title="{{ query.title }} (RSS)"
     />
     <link
       rel="alternate"
       type="application/atom+xml"
-      href="{{ user.feed_atom_url }}"
-      title="{{ user.title }} (Atom)"
+      href="{{ query.atom_url }}"
+      title="{{ query.title }} (Atom)"
     />
     {% load static %}
     <link
@@ -27,10 +27,10 @@
   <body>
     <div class="container">
       <section>
-        <h1>{{ user.title }}</h1>
+        <h1>{{ query.title }}</h1>
         <p>
-          <a href="{{ user.feed_rss_url }}" class="button">RSS</a>
-          <a href="{{ user.feed_atom_url }}" class="button">Atom</a>
+          <a href="{{ query.rss_url }}" class="button">RSS</a>
+          <a href="{{ query.atom_url }}" class="button">Atom</a>
         </p>
         <p>
           The RSS/Atom feed contains the last 10 items and is refreshed every
@@ -45,15 +45,7 @@
           <a href="{{ changeset.url }}">{{ changeset.title }}</a>
         </h2>
         <p>{{ changeset.created_at|date:"j M Y H:i" }}</p>
-        <img
-          src="{{ changeset.svg.url }}"
-          alt="Map showing OpenStreetMap changeset {{ changeset.id }}"
-        />
-        <p>
-          <a href="{{ changeset.osm_url }}"
-            >Go to changeset {{ changeset.id }} at openstreetmap.org</a
-          >
-        </p>
+        {% include "changesets/description.html" %}
       </section>
     </div>
     {% empty %}
