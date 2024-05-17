@@ -77,7 +77,7 @@ class Changeset:
 
     @property
     def url(self) -> str:
-        if self.uid:
+        if self.query.uid:
             return reverse("changeset-detail-by-uid", args=[self.query.uid, self.id])
         return reverse(
             "changeset-detail-by-display-name", args=[self.query.display_name, self.id]
