@@ -25,52 +25,65 @@
     />
   </head>
   <body>
-    <div class="container">
-      <section>
-        <h1>{{ query.title }}</h1>
-        <p>
+    <div class="border-bottom">
+      <div class="mx-2 my-3 max-width-s">
+        <h1 class="my-3">{{ query.title }}</h1>
+        <p class="my-1 italics">
           <a href="{{ query.rss_url }}" class="button">RSS</a>
           <a href="{{ query.atom_url }}" class="button">Atom</a>
         </p>
-        <p>
+        <p class="my-1 italics">
           The RSS/Atom feed contains the last 10 items and is refreshed every
           time you poll it but at most once per hour.
         </p>
-      </section>
+      </div>
     </div>
     {% for changeset in page_obj %}
-    <div class="container">
-      <section>
-        <h2>
+    <div class="border-bottom">
+      <div class="mx-2 my-3">
+        <h2 class="my-3">
           <a href="{{ changeset.url }}">{{ changeset.title }}</a>
         </h2>
-        <p>{{ changeset.created_at|date:"j M Y H:i" }}</p>
+        <p class="my-1 italics">{{ changeset.created_at|date:"j M Y H:i" }}</p>
         {% include "changesets/description.html" %}
-      </section>
+      </div>
     </div>
     {% empty %}
-    <div class="container">
-      <section>
-        <p>No changesets yet.</p>
-      </section>
+    <div class="border-bottom">
+      <div class="mx-2 my-3">
+        <p class="my-1 italics">No changesets yet.</p>
+      </div>
     </div>
     {% endfor %}
-    <div class="pagination">
-      <span class="step-links">
+    <div class="border-bottom">
+      <div class="mx-2 my-3 flex">
         {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1" class="button mr-05">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="button"
+          >previous</a
+        >
+        {% else %}
+        <span class="button disabled mr-05">&laquo; first</span>
+        <span class="button disabled">previous</span>
         {% endif %}
-
-        <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        <span class="label mx-2">
+          page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </span>
-
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}" class="button mr-05"
+          >next</a
+        >
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="button"
+          >last &raquo;</a
+        >
+        {% else %}
+        <span class="button disabled mr-05">next</span>
+        <span class="button disabled">last &raquo;</span>
         {% endif %}
-      </span>
+      </div>
+    </div>
+    <div class="mx-2 my-3">
+      <a href="{% url 'index' %}" class="button">home</a>
     </div>
   </body>
 </html>

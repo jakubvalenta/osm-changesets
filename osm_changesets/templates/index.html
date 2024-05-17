@@ -16,19 +16,21 @@
       media="screen"
     />
   </head>
-  <body class="index">
-    <div class="container">
-      <section>
-        <h1>OpenStreetMap Changesets</h1>
-        <p>
+  <body>
+    <div class="border-bottom">
+      <div class="mx-2 my-3 max-width-s">
+        <h1 class="my-3">OpenStreetMap Changesets</h1>
+        <p class="my-1 italics">
           This website shows changesets by an OpenStreetMap user as a simple
           list with little maps; including an RSS/Atom feed.
         </p>
-        <p>
+        <p class="my-1 italics">
           See
-          <a href="{% url 'changeset-list-by-uid' 4151758 %}">example changesets</a>
-          / <a href="{% url 'changeset-list-by-uid-rss' 4151758 %}">RSS</a> and compare
-          them to
+          <a href="{% url 'changeset-list-by-uid' 4151758 %}"
+            >example changesets</a
+          >
+          / <a href="{% url 'changeset-list-by-uid-rss' 4151758 %}">RSS</a> and
+          compare them to
           <a href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
             >openstreetmap.org changesets</a
           >
@@ -38,26 +40,46 @@
             >RSS</a
           >.
         </p>
-      </section>
+      </div>
     </div>
-    <div class="container">
-      <section>
-        <form method="post">
-          {% csrf_token %} {{ form.non_field_errors }}
-          <div>
-            {{ form.uid.as_field_group }}
-            {{ form.display_name.as_field_group }}
-            <input type="submit" name="create" value="Show changesets" />
+    <div class="border-bottom">
+      <div class="mx-2">
+        <form method="post" class="my-3">
+          {% csrf_token %}
+          <div class="flex flex-desktop">
+            <div class="flex my-1-mobile">
+              <label for="{{ form.uid.id_for_label }}" class="label mr-05"
+                >{{ form.uid.label }}</label
+              >
+              <span class="mr-05">{{ form.uid }} {{ form.uid.errors }}</span>
+            </div>
+            <div class="flex my-1-mobile">
+              <label
+                for="{{ form.display_name.id_for_label }}"
+                class="label mr-05"
+                >{{ form.display_name.label }}</label
+              >
+              <span class="mr-05">
+                {{ form.display_name }} {{ form.display_name.errors }}
+              </span>
+            </div>
+            <input
+              type="submit"
+              name="create"
+              value="Show changesets"
+              class="button"
+            />
           </div>
+          {{ form.non_field_errors }}
         </form>
-      </section>
+      </div>
     </div>
-    <footer>
+    <div class="mx-2 my-3">
       2024
       <a href="https://www.jakubvalenta.cz/" target="blank">Jakub Valenta</a>,
       <a href="https://github.com/jakubvalenta/osm-changesets" target="blank"
         >code</a
       >
-    </footer>
+    </div>
   </body>
 </html>

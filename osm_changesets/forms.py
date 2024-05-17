@@ -19,6 +19,6 @@ class ChangesetQueryForm(forms.Form):
         uid = cleaned_data.get("uid")
         display_name = cleaned_data.get("display_name")
         if not uid and not display_name:
-            raise ValidationError("Enter a user id or display name.")
+            raise ValidationError("Enter user id or display name.")
         if uid and display_name:
             raise ValidationError("Enter only one of user id or display name.")

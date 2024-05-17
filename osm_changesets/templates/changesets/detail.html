@@ -13,12 +13,19 @@
     />
   </head>
   <body>
-    <div class="container">
-      <section>
-        <h1>{{ changeset.title }}</h1>
-        <p>{{ changeset.created_at|date:"j M Y H:i" }}</p>
+    <div class="border-bottom">
+      <div class="mx-2 my-3">
+        <div class="max-width-s">
+          <h1 class="my-3">{{ changeset.title }}</h1>
+          <p class="my-1 italics">
+            {{ changeset.created_at|date:"j M Y H:i" }}
+          </p>
+        </div>
         {% include "changesets/description.html" %}
-      </section>
+      </div>
+    </div>
+    <div class="mx-2 my-3">
+      <a href="{{ changeset.query.url }}" class="button">back</a>
     </div>
   </body>
 </html>
