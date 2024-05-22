@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from osm_changesets.settings_base import *  # noqa: F401, F403
+from osm_changesets.settings import *  # noqa: F401, F403
 
 ALLOWED_HOSTS = [os.environ["ALLOWED_HOST"]]
 DEBUG = False
@@ -16,5 +16,11 @@ DATABASES = {
         "NAME": "osm-changesets",
         "USER": "osm-changesets",
         "CONN_MAX_AGE": 300,
+    }
+}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache",
     }
 }
