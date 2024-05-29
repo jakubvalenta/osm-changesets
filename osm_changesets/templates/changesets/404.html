@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>OpenStreetMap user not found</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'osm_changesets/main.css' %}"
+      type="text/css"
+      media="screen"
+    />
+  </head>
+  <body>
+    <div class="border-bottom">
+      <div class="mx-2 my-3 max-width-s">
+        <h1 class="my-3">OpenStreetMap user not found</h1>
+      </div>
+    </div>
+    <div class="mx-2 my-3">
+      <a href="{% url 'index' %}" class="button">home</a>
+    </div>
+  </body>
+</html>

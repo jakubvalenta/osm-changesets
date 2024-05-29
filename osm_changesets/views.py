@@ -119,7 +119,12 @@ class ChangesetQuery:
         return data
 
     def get_changesets(self) -> list[Changeset]:
-        data = self._call_api()
+        try:
+            data = self._call_api()
+        except requests.HTTPError as err:
+            if err.response.status_code == 404:
+                raise Http404("User not found")
+            raise err
         return [
             Changeset(
                 id=int(item["id"]),
@@ -196,7 +201,6 @@ def changeset_list(
 ) -> HttpResponse:
     query = ChangesetQuery(uid=uid, display_name=display_name)
     changesets = query.get_changesets()
-    print(changesets[0])
     paginator = Paginator(changesets, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
