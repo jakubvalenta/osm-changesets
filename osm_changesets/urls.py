@@ -20,6 +20,11 @@ urlpatterns = [
         name="changeset-detail-by-uid",
     ),
     path(
+        "changesets-by-uid/<int:uid>/<int:id>.svg",
+        views.changeset_svg,
+        name="changeset-svg-by-uid",
+    ),
+    path(
         "changesets-by-display-name/<str:display_name>/<int:id>",
         views.changeset_detail,
         name="changeset-detail-by-display-name",

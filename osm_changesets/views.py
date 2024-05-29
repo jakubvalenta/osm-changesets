@@ -205,6 +205,21 @@ def changeset_list(
     )
 
 
+def changeset_svg(
+    request: HttpRequest,
+    uid: int,
+    id: int,
+) -> HttpResponse:
+    query = ChangesetQuery(uid=uid, display_name=None)
+    changesets = query.get_changesets()
+    for changeset in changesets:
+        if changeset.id == id:
+            return HttpResponse(
+                changeset.svg, headers={"Content-Type": "image/svg+xml"}
+            )
+    raise Http404("Changeset not found")
+
+
 class RssChangesetsFeed(Feed):
     description_template = "changesets/description.html"
 

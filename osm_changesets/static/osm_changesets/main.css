@@ -86,10 +86,10 @@ input[type='text'],
 }
 input[type='text'],
 .button,
-svg {
+img {
   border-radius: 0.5em;
 }
-svg {
+img {
   display: block;
   width: 100%;
   height: auto;
