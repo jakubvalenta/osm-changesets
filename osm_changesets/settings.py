@@ -42,4 +42,4 @@ TIME_ZONE = "UTC"
 USE_I18N = False
 
 STATIC_URL = "static/"
-STATIC_ROOT = str(BASE_DIR / "public")
+STATIC_ROOT = str(BASE_DIR.parent / "public")
