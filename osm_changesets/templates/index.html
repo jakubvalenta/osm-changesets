@@ -21,24 +21,25 @@
       <div class="mx-2 my-3 max-width-s">
         <h1 class="my-3">OpenStreetMap Changesets</h1>
         <p class="my-1 italics">
-          This website shows changesets by an OpenStreetMap user as a simple
-          list with little maps; including an RSS/Atom feed.
+          Hello! <span style="font-style: normal">🌍</span> This website shows
+          changesets made by an OpenStreetMap user; including small static maps
+          (<a href="{% url 'changeset-list-by-uid' 4151758 %}">example</a>) and
+          an RSS feed (<a href="{% url 'changeset-list-by-uid-rss' 4151758 %}"
+            >example</a
+          >).
         </p>
         <p class="my-1 italics">
-          See
-          <a href="{% url 'changeset-list-by-uid' 4151758 %}"
-            >example changesets</a
+          Compare it to osm.org, which has an interactive interface (<a
+            href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
+            >example</a
+          >) without maps in RSS.
+        </p>
+        <p class="my-1 italics">
+          Learn how to
+          <a href="https://wiki.openstreetmap.org/wiki/Getting_Involved"
+            >get involved</a
           >
-          / <a href="{% url 'changeset-list-by-uid-rss' 4151758 %}">RSS</a> and
-          compare them to
-          <a href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
-            >openstreetmap.org changesets</a
-          >
-          /
-          <a
-            href="https://www.openstreetmap.org/user/Jakub%20Valenta/history/feed"
-            >RSS</a
-          >.
+          in the OpenStreetMap project.
         </p>
       </div>
     </div>
