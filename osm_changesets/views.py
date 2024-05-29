@@ -224,7 +224,7 @@ class RssChangesetsFeed(Feed):
         return query.rss_url
 
     def items(self, query: ChangesetQuery) -> list[Changeset]:
-        return query.get_changesets()
+        return query.get_changesets()[:10]
 
     def item_link(self, changeset: Changeset) -> str:
         return changeset.url
