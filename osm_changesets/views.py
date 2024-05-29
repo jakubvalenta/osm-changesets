@@ -235,6 +235,11 @@ class RssChangesetsFeed(Feed):
     def item_title(self, changeset: Changeset) -> str:
         return changeset.title
 
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["changeset"] = context["obj"]
+        return context
+
 
 class AtomChangesetsFeed(RssChangesetsFeed):
     feed_type = Atom1Feed
