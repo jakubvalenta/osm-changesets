@@ -7,14 +7,14 @@ A website that shows changesets by an OpenStreetMap user with map images.
 ### Mac
 
 ```shell
-$ brew install poetry yarn
+$ brew install poetry
 $ make setup
 ```
 
 ### Arch Linux
 
 ```shell
-# pacman -S python-poetry yarn
+# pacman -S python-poetry
 $ make setup
 ```
 
