@@ -18,33 +18,8 @@
   </head>
   <body>
     <div class="border-bottom">
-      <div class="mx-2 my-3 max-width-s">
-        <h1 class="my-3">OpenStreetMap Changesets</h1>
-        <p class="my-1 italics">
-          Hello! <span style="font-style: normal">🌍</span> This website shows
-          changesets made by an OpenStreetMap user; including small static maps
-          (<a href="{% url 'changeset-list-by-uid' 4151758 %}">example</a>) and
-          an RSS feed (<a href="{% url 'changeset-list-by-uid-rss' 4151758 %}"
-            >example</a
-          >).
-        </p>
-        <p class="my-1 italics">
-          Compare it to osm.org, which has an interactive interface (<a
-            href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
-            >example</a
-          >) without maps in RSS.
-        </p>
-        <p class="my-1 italics">
-          Learn how to
-          <a href="https://wiki.openstreetmap.org/wiki/Getting_Involved"
-            >get involved</a
-          >
-          in the OpenStreetMap project.
-        </p>
-      </div>
-    </div>
-    <div class="border-bottom">
       <div class="mx-2">
+        <h1 class="my-3">OpenStreetMap Changesets</h1>
         <form method="post" class="my-3">
           {% csrf_token %}
           <div class="flex flex-desktop">
@@ -73,6 +48,32 @@
           </div>
           {{ form.non_field_errors }}
         </form>
+      </div>
+    </div>
+    <div class="border-bottom">
+      <div class="mx-2 my-3 max-width-s">
+        <p class="my-1 italics">
+          This website shows changesets made by an OpenStreetMap user; including
+          small static maps (<a href="{% url 'changeset-list-by-uid' 4151758 %}"
+            >example</a
+          >) and an RSS feed (<a
+            href="{% url 'changeset-list-by-uid-rss' 4151758 %}"
+            >example</a
+          >).
+        </p>
+        <p class="my-1 italics">
+          Compare it to osm.org, which has an interactive interface (<a
+            href="https://www.openstreetmap.org/user/Jakub%20Valenta/history"
+            >example</a
+          >) without maps in RSS.
+        </p>
+        <p class="my-1 italics">
+          Learn how to
+          <a href="https://wiki.openstreetmap.org/wiki/Getting_Involved"
+            >get involved</a
+          >
+          in the OpenStreetMap project.
+        </p>
       </div>
     </div>
     <div class="mx-2 my-3">
