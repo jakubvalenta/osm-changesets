@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "osm-changesets"
-version = "0.1.0"
+version = "0.1.1"
 description = "A website that shows changesets by an OpenStreetMap user with map images."
 authors = ["Jakub Valenta <jakub@jakubvalenta.cz>"]
 license = "GPLv3+"
@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.31.0"
-Django = "^5.0.6"
+Django = "^5.0.5"
 py-staticmaps = "^0.4.0"
 
 [tool.poetry.group.dev.dependencies]
