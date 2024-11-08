@@ -8,7 +8,7 @@ run:  ## Start the development server
 setup:  ## Install Python dependencies
 	poetry install
 
-.PHONE: lint
+.PHONY: lint
 lint:  ## Lint Python code
 	poetry run flake8 $(_python_pkg)
 	poetry run mypy $(_python_pkg) --ignore-missing-imports
