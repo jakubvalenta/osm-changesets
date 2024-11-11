@@ -8,26 +8,32 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-requests = "^2.31.0"
-Django = "^5.0.5"
+django = "^5.0.9"
 py-staticmaps = "^0.4.0"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.10.0"
-isort = "^5.13.2"
-flake8-pyproject = "^1.2.3"
-types-requests = "^2.31.0.20240406"
+django-stubs = {version = "^5.0.4", extras = ["compatible-mypy"]}
+mypy = "^1.11.2"
+types-requests = "^2.31.0"
 
-[tool.flake8]
-max-line-length = 100
-
-[tool.isort]
-profile = "django"
-line_length = 100
-skip = ["migrations"]
+[tool.django-stubs]
+django_settings_module = "osm_changesets.settings"
 
 [tool.mypy]
-exclude = ["/migrations/"]
+plugins = ["mypy_django_plugin.main"]
+
+[[tool.mypy.overrides]]
+module = ["staticmaps"]
+ignore_missing_imports = true
+
+[tool.ruff]
+extend-exclude = ["migrations"]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["C90", "D", "DJ", "E", "F", "I", "N", "PT"]
+ignore = ["D100", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D211", "D212", "PT009"]
 
 [build-system]
 requires = ["poetry-core"]

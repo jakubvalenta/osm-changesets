@@ -10,9 +10,8 @@ setup:  ## Install Python dependencies
 
 .PHONY: lint
 lint:  ## Lint Python code
-	poetry run flake8 $(_python_pkg)
-	poetry run mypy $(_python_pkg) --ignore-missing-imports
-	poetry run isort -c $(_python_pkg)
+	poetry run ruff check $(_python_pkg)
+	poetry run mypy $(_python_pkg)
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-16s\033[0m %s\n", $$1, $$2}'
