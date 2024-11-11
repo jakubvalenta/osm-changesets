@@ -67,6 +67,7 @@ class ChangesetQuery:
             params=(
                 {"user": str(self.uid)} if self.uid else {"display_name": str(self.display_name)}
             ),
+            timeout=10,
         )
         r.raise_for_status()
         data = r.json()
