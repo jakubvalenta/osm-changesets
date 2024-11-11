@@ -3,18 +3,19 @@ from dataclasses import dataclass
 from typing import Optional
 
 import requests
-import staticmaps
+from celery.result import AsyncResult
 from django.contrib.syndication.views import Feed
-from django.core.cache import caches
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
+from django_ratelimit.decorators import ratelimit
 
 from osm_changesets.forms import ChangesetQueryForm
-
-cache = caches["default"]
+from osm_changesets.tasks import render_svg
 
 
 @dataclass
@@ -31,47 +32,6 @@ class Changeset:
     query: "ChangesetQuery"
 
     @property
-    def svg(
-        self, color: staticmaps.color.Color = staticmaps.color.BLUE, width: int = 2
-    ) -> str:
-        cache_key = f"changeset:{self.id}:svg"
-        data = cache.get(cache_key)
-        if data is not None:
-            return data
-
-        context = staticmaps.Context()
-        context.set_tile_provider(staticmaps.tile_provider_OSM)
-        if self.min_lat == self.max_lat and self.min_lon == self.max_lon:
-            context.add_object(
-                staticmaps.Marker(
-                    staticmaps.create_latlng(self.min_lat, self.min_lon), color=color
-                ),
-            )
-        else:
-            context.add_object(
-                staticmaps.Area(
-                    [
-                        staticmaps.create_latlng(lat, lng)
-                        for lat, lng in [
-                            (self.min_lat, self.min_lon),
-                            (self.min_lat, self.max_lon),
-                            (self.max_lat, self.max_lon),
-                            (self.max_lat, self.min_lon),
-                            (self.min_lat, self.min_lon),
-                        ]
-                    ],
-                    fill_color=staticmaps.color.TRANSPARENT,
-                    color=color,
-                    width=width,
-                )
-            )
-        drawing = context.render_svg(800, 500)
-        data = drawing.tostring()
-
-        cache.set(cache_key, data, 30 * 3600)
-        return data
-
-    @property
     def title(self) -> str:
         return self.comment or str(self.id)
 
@@ -79,9 +39,7 @@ class Changeset:
     def url(self) -> str:
         if self.query.uid:
             return reverse("changeset-detail-by-uid", args=[self.query.uid, self.id])
-        return reverse(
-            "changeset-detail-by-display-name", args=[self.query.display_name, self.id]
-        )
+        return reverse("changeset-detail-by-display-name", args=[self.query.display_name, self.id])
 
     @property
     def osm_url(self) -> str:
@@ -107,9 +65,7 @@ class ChangesetQuery:
             "https://api.openstreetmap.org/api/0.6/changesets",
             headers={"Accept": "application/json"},
             params=(
-                {"user": str(self.uid)}
-                if self.uid
-                else {"display_name": str(self.display_name)}
+                {"user": str(self.uid)} if self.uid else {"display_name": str(self.display_name)}
             ),
         )
         r.raise_for_status()
@@ -140,6 +96,13 @@ class ChangesetQuery:
             )
             for item in data.get("changesets", [])
         ]
+
+    def get_changeset(self, id: int) -> Changeset | None:
+        changesets = self.get_changesets()
+        for changeset in changesets:
+            if changeset.id == id:
+                return changeset
+        return None
 
     @property
     def title(self) -> str:
@@ -186,11 +149,10 @@ def changeset_detail(
     id: int,
 ) -> HttpResponse:
     query = ChangesetQuery(uid=uid, display_name=display_name)
-    changesets = query.get_changesets()
-    for changeset in changesets:
-        if changeset.id == id:
-            return render(request, "changesets/detail.html", {"changeset": changeset})
-    raise Http404("Changeset not found")
+    changeset = query.get_changeset(id)
+    if changeset is None:
+        raise Http404("Changeset not found")
+    return render(request, "changesets/detail.html", {"changeset": changeset})
 
 
 def changeset_list(
@@ -204,24 +166,37 @@ def changeset_list(
     paginator = Paginator(changesets, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(
-        request, "changesets/list.html", {"page_obj": page_obj, "query": query}
-    )
+    return render(request, "changesets/list.html", {"page_obj": page_obj, "query": query})
 
 
+@ratelimit(key="header:x-real-ip", rate="120/h", method=["GET"])
 def changeset_svg(
     request: HttpRequest,
     uid: int,
     id: int,
 ) -> HttpResponse:
     query = ChangesetQuery(uid=uid, display_name=None)
-    changesets = query.get_changesets()
-    for changeset in changesets:
-        if changeset.id == id:
-            return HttpResponse(
-                changeset.svg, headers={"Content-Type": "image/svg+xml"}
-            )
-    raise Http404("Changeset not found")
+    changeset = query.get_changeset(id)
+    if changeset is None:
+        raise Http404("Changeset not found")
+    result_id_cache_key = f"changeset:{id}:result-id"
+    result_id = cache.get(result_id_cache_key)
+    if result_id is not None:
+        result: AsyncResult = AsyncResult(result_id)
+        if result.ready():
+            svg = result.get()
+            return HttpResponse(svg, content_type="image/svg+xml")
+        result.forget()
+    else:
+        result = render_svg.delay(
+            id,
+            max_lat=changeset.max_lat,
+            max_lon=changeset.max_lon,
+            min_lat=changeset.min_lat,
+            min_lon=changeset.min_lon,
+        )
+        cache.set(result_id_cache_key, result.id, 30 * 3600)
+    return redirect(static("osm_changesets/rendering.svg"))
 
 
 class RssChangesetsFeed(Feed):

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -6,12 +7,9 @@ SECRET_KEY = "django-insecure-9e%=k9cx$qqvm5k743e0nrmd#@v@&p9m+syq3-fx(2azkba3fg
 
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".local"]
 
-INSTALLED_APPS = [
-    "django.contrib.staticfiles",
-    "osm_changesets",
-]
+INSTALLED_APPS = ["django.contrib.staticfiles", "osm_changesets"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -37,9 +35,27 @@ TEMPLATES = [
     },
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "unix:///run/user/1000/redis.sock",
+    }
+}
+
 TIME_ZONE = "UTC"
 
 USE_I18N = False
 
 STATIC_URL = "static/"
 STATIC_ROOT = str(BASE_DIR.parent / "public")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"level": "INFO", "class": "logging.StreamHandler"}},
+    "loggers": {"csfd_export": {"level": "INFO", "handlers": ["console"]}},
+}
+
+CELERY_BROKER = "redis+socket:///run/user/1000/redis.sock"
+CELERY_BACKEND = "redis+socket:///run/user/1000/redis.sock"
+CELERY_RESULT_EXPIRES = timedelta(days=30)
