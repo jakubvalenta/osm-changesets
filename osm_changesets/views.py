@@ -170,7 +170,7 @@ def changeset_list(
     return render(request, "changesets/list.html", {"page_obj": page_obj, "query": query})
 
 
-@ratelimit(key="header:x-real-ip", rate="120/h", method=["GET"])
+@ratelimit(key="header:x-real-ip", rate="600/h", method=["GET"])
 def changeset_svg(
     request: HttpRequest,
     uid: int,
