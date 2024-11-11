@@ -1,4 +1,5 @@
 .mypy_cache
 __pycache__
+celerybeat-schedule
 dump.rdb
 public
