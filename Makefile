@@ -2,7 +2,7 @@ _python_pkg = osm_changesets
 
 .PHONY: run
 run:  ## Start the development server
-	poetry run python manage.py runserver
+	$(MAKE) manage args=runserver
 
 .PHONY: worker
 worker:  ## Start the Celery worker server
@@ -16,6 +16,22 @@ redis:  ## Start the Redis message broker
 .PHONY: setup
 setup:  ## Install Python dependencies
 	poetry install
+
+.PHONY: manage
+manage:  ## Run Django's manage.py, use variable 'args' to pass arguments
+	poetry run python manage.py $(args)
+
+.PHONY: shell
+shell:  ## Run Django shell
+	$(MAKE) manage args=shell
+
+.PHONY: migrate
+migrate:  ## Migrate
+	$(MAKE) manage args=migrate
+
+.PHONY: makemigrations
+makemigrations:  ## Make migrations
+	$(MAKE) manage args="makemigrations $(_python_pkg)"
 
 .PHONY: lint
 lint:  ## Lint Python code

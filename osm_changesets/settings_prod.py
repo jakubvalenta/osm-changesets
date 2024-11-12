@@ -10,6 +10,13 @@ SECRET_KEY = (
     .read_text()
     .strip()
 )
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "osm-changesets",
+        "USER": "osm-changesets",
+    }
+}
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -18,4 +25,3 @@ CACHES = {
 }
 
 CELERY_BROKER = "redis+socket:///run/redis-osm-changesets/redis.sock"
-CELERY_BACKEND = "redis+socket:///run/redis-osm-changesets/redis.sock"

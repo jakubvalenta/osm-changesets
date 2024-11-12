@@ -35,6 +35,13 @@ TEMPLATES = [
     },
 ]
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "db.sqlite3",
+    }
+}
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
@@ -57,5 +64,3 @@ LOGGING = {
 }
 
 CELERY_BROKER = "redis+socket:///run/user/1000/redis.sock"
-CELERY_BACKEND = "redis+socket:///run/user/1000/redis.sock"
-CELERY_RESULT_EXPIRES = timedelta(days=30)

@@ -3,15 +3,14 @@ import logging
 import staticmaps
 from celery import Celery
 from django.conf import settings
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
 app = Celery(
     "tasks",
     broker=settings.CELERY_BROKER,
-    backend=settings.CELERY_BACKEND,
     broker_connection_retry_on_startup=True,
-    result_expires=settings.CELERY_RESULT_EXPIRES,
 )
 
 
@@ -24,7 +23,7 @@ def render_svg(
     min_lon: float,
     color: staticmaps.color.Color = staticmaps.color.BLUE,
     width: int = 2,
-) -> str:
+):
     logger.info("Rendering SVG for changeset %d", id)
     context = staticmaps.Context()
     context.set_tile_provider(staticmaps.tile_provider_OSM)
@@ -51,4 +50,9 @@ def render_svg(
             )
         )
     drawing = context.render_svg(800, 500)
-    return drawing.tostring()
+    svg = drawing.tostring()
+    cache.set(f"changeset:{id}:svg", svg, 30 * 3600)
+
+
+def get_svg(id: int) -> str | None:
+    return cache.get(f"changeset:{id}:svg")

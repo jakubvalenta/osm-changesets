@@ -15,10 +15,10 @@ py-staticmaps = "^0.4.0"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
+celery-types = "^0.22.0"
 django-stubs = {version = "^5.0.4", extras = ["compatible-mypy"]}
 mypy = "^1.11.2"
 types-requests = "^2.31.0"
-celery-types = "^0.22.0"
 
 [tool.django-stubs]
 django_settings_module = "osm_changesets.settings"
@@ -36,7 +36,7 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["C90", "D", "DJ", "E", "F", "I", "N", "PT"]
-ignore = ["D100", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D211", "D212", "PT009"]
+ignore = ["D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "D203", "D211", "D212", "PT009"]
 
 [build-system]
 requires = ["poetry-core"]

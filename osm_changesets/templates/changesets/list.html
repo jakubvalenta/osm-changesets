@@ -3,18 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{{ query.title }}</title>
+    <title>{{ form.title }}</title>
     <link
       rel="alternate"
       type="application/rss+xml"
-      href="{{ query.rss_url }}"
-      title="{{ query.title }} (RSS)"
+      href="{{ form.rss_url }}"
+      title="{{ form.title }} (RSS)"
     />
     <link
       rel="alternate"
       type="application/atom+xml"
-      href="{{ query.atom_url }}"
-      title="{{ query.title }} (Atom)"
+      href="{{ form.atom_url }}"
+      title="{{ form.title }} (Atom)"
     />
     {% load static %}
     <link
@@ -27,14 +27,14 @@
   <body>
     <div class="border-bottom">
       <div class="mx-2 my-3 max-width-s">
-        <h1 class="my-3">{{ query.title }}</h1>
+        <h1 class="my-3">{{ form.title }}</h1>
         <p class="my-1 italics">
-          <a href="{{ query.rss_url }}" class="button">RSS</a>
-          <a href="{{ query.atom_url }}" class="button">Atom</a>
+          <a href="{{ form.rss_url }}" class="button">RSS</a>
+          <a href="{{ form.atom_url }}" class="button">Atom</a>
         </p>
         <p class="my-1 italics">
-          The RSS/Atom feed contains the last 10 items and is refreshed every
-          time you poll it but at most once per hour.
+          The RSS/Atom feed contains the last {{ FEED_LIMIT }} items and is
+          refreshed every time you poll it but at most once per hour.
         </p>
       </div>
     </div>
@@ -42,7 +42,7 @@
     <div class="border-bottom">
       <div class="mx-2 my-3">
         <h2 class="my-3">
-          <a href="{{ changeset.url }}">{{ changeset.title }}</a>
+          <a href="{{ changeset.get_absolute_url }}">{{ changeset.title }}</a>
         </h2>
         <p class="my-1 italics">{{ changeset.created_at|date:"j M Y H:i" }}</p>
         {% include "changesets/description.html" %}
@@ -58,8 +58,8 @@
     <div class="border-bottom">
       <div class="mx-2 my-3 flex">
         {% if page_obj.has_previous %}
-        <a href="?page=1" class="button mr-05">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}" class="button"
+        <a href="{{ form.list_url }}&page=1" class="button mr-05">&laquo; first</a>
+        <a href="{{ form.list_url }}&page={{ page_obj.previous_page_number }}" class="button"
           >previous</a
         >
         {% else %}
@@ -70,10 +70,10 @@
           page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </span>
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="button mr-05"
+        <a href="{{ form.list_url }}&page={{ page_obj.next_page_number }}" class="button mr-05"
           >next</a
         >
-        <a href="?page={{ page_obj.paginator.num_pages }}" class="button"
+        <a href="{{ form.list_url }}&page={{ page_obj.paginator.num_pages }}" class="button"
           >last &raquo;</a
         >
         {% else %}
@@ -85,5 +85,8 @@
     <div class="mx-2 my-3">
       <a href="{% url 'index' %}" class="button">home</a>
     </div>
+    <script>
+      <!-- TODO Add feature to reload images. -->
+    </script>
   </body>
 </html>
