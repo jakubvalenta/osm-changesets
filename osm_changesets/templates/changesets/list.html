@@ -1,92 +1,81 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{{ form.title }}</title>
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      href="{{ form.rss_url }}"
-      title="{{ form.title }} (RSS)"
-    />
-    <link
-      rel="alternate"
-      type="application/atom+xml"
-      href="{{ form.atom_url }}"
-      title="{{ form.title }} (Atom)"
-    />
-    {% load static %}
-    <link
-      rel="stylesheet"
-      href="{% static 'osm_changesets/main.css' %}"
-      type="text/css"
-      media="screen"
-    />
-  </head>
-  <body>
-    <div class="border-bottom">
-      <div class="mx-2 my-3 max-width-s">
-        <h1 class="my-3">{{ form.title }}</h1>
-        <p class="my-1 italics">
-          <a href="{{ form.rss_url }}" class="button">RSS</a>
-          <a href="{{ form.atom_url }}" class="button">Atom</a>
-        </p>
-        <p class="my-1 italics">
-          The RSS/Atom feed contains the last {{ FEED_LIMIT }} items and is
-          refreshed every time you poll it but at most once per hour.
-        </p>
-      </div>
-    </div>
-    {% for changeset in page_obj %}
-    <div class="border-bottom">
-      <div class="mx-2 my-3">
-        <h2 class="my-3">
-          <a href="{{ changeset.get_absolute_url }}">{{ changeset.title }}</a>
-        </h2>
-        <p class="my-1 italics">{{ changeset.created_at|date:"j M Y H:i" }}</p>
-        {% include "changesets/description.html" %}
-      </div>
-    </div>
-    {% empty %}
-    <div class="border-bottom">
-      <div class="mx-2 my-3">
-        <p class="my-1 italics">No changesets yet.</p>
-      </div>
-    </div>
-    {% endfor %}
-    <div class="border-bottom">
-      <div class="mx-2 my-3 flex">
-        {% if page_obj.has_previous %}
-        <a href="{{ form.list_url }}&page=1" class="button mr-05">&laquo; first</a>
-        <a href="{{ form.list_url }}&page={{ page_obj.previous_page_number }}" class="button"
-          >previous</a
-        >
-        {% else %}
-        <span class="button disabled mr-05">&laquo; first</span>
-        <span class="button disabled">previous</span>
-        {% endif %}
-        <span class="label mx-2">
-          page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-        {% if page_obj.has_next %}
-        <a href="{{ form.list_url }}&page={{ page_obj.next_page_number }}" class="button mr-05"
-          >next</a
-        >
-        <a href="{{ form.list_url }}&page={{ page_obj.paginator.num_pages }}" class="button"
-          >last &raquo;</a
-        >
-        {% else %}
-        <span class="button disabled mr-05">next</span>
-        <span class="button disabled">last &raquo;</span>
-        {% endif %}
-      </div>
-    </div>
-    <div class="mx-2 my-3">
-      <a href="{% url 'index' %}" class="button">home</a>
-    </div>
-    <script>
-      <!-- TODO Add feature to reload images. -->
-    </script>
-  </body>
-</html>
+{% extends "changesets/base.html" %}
+
+{% block title %}{{ form.title }}{% endblock %}
+
+{% block head %}
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  href="{{ form.rss_url }}"
+  title="{{ form.title }} (RSS)"
+/>
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="{{ form.atom_url }}"
+  title="{{ form.title }} (Atom)"
+/>
+{% endblock %}
+
+{% block heading %}{{ form.title }}{% endblock %}
+
+{% block header %}
+<p class="my-1 italics">
+  <a href="{{ form.rss_url }}" class="button">RSS</a>
+  <a href="{{ form.atom_url }}" class="button">Atom</a>
+</p>
+<p class="my-1 italics max-width-s">
+  The RSS/Atom feed contains the last {{ FEED_LIMIT }} items and is
+  refreshed every time you poll it but at most once per hour.
+</p>
+{% endblock %}
+
+{% block content %}
+{% for changeset in page_obj %}
+<div class="border-bottom">
+  <div class="mx-2 my-3">
+    <h2 class="my-3">
+      <a href="{{ changeset.get_absolute_url }}">{{ changeset.title }}</a>
+    </h2>
+    <p class="my-1 italics">{{ changeset.created_at|date:"j M Y H:i" }}</p>
+    {% include "changesets/description.html" %}
+  </div>
+</div>
+{% empty %}
+<div class="border-bottom">
+  <div class="mx-2 my-3">
+    <p class="my-1 italics">No changesets yet.</p>
+  </div>
+</div>
+{% endfor %}
+<div class="border-bottom">
+  <div class="mx-2 my-3 flex">
+    {% if page_obj.has_previous %}
+    <a href="{{ form.list_url }}&page=1" class="button mr-05">&laquo; first</a>
+    <a href="{{ form.list_url }}&page={{ page_obj.previous_page_number }}" class="button"
+      >previous</a
+    >
+    {% else %}
+    <span class="button disabled mr-05">&laquo; first</span>
+    <span class="button disabled">previous</span>
+    {% endif %}
+    <span class="label mx-2">
+      page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+    <a href="{{ form.list_url }}&page={{ page_obj.next_page_number }}" class="button mr-05"
+      >next</a
+    >
+    <a href="{{ form.list_url }}&page={{ page_obj.paginator.num_pages }}" class="button"
+      >last &raquo;</a
+    >
+    {% else %}
+    <span class="button disabled mr-05">next</span>
+    <span class="button disabled">last &raquo;</span>
+    {% endif %}
+  </div>
+</div>
+<div class="mx-2 my-3">
+  <a href="{% url 'index' %}" class="button">home</a>
+</div>
+{% endblock %}

@@ -5,7 +5,6 @@ from django.core.exceptions import BadRequest
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.templatetags.static import static
 from django.utils.decorators import method_decorator
 from django.utils.feedgenerator import Atom1Feed, SyndicationFeed
 from django.views.generic import DetailView
@@ -92,7 +91,7 @@ class ChangesetListView(ListView):
 def changeset_svg(request: HttpRequest, id: int) -> HttpResponse:
     svg = get_svg(id)
     if svg is None:
-        return redirect(static("osm_changesets/rendering.svg"))
+        return HttpResponse("Waiting for SVG rendering to complete", status=503)
     return HttpResponse(svg, content_type="image/svg+xml")
 
 

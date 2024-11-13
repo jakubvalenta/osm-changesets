@@ -1,24 +1,43 @@
+:root {
+  --color-error: #ffedf5;
+
+  --color-darker: #222;
+  --color-dark: #88918d;
+  --color-medium: #c1cfc9;
+  --color-light: #d6e6df;
+  --color-lighter: #e1f2eb;
+  --color-lightest: #ecfef6;
+}
+
 body {
   margin: 0;
-  background: #ecfef6;
+  background: var(--color-lightest);
 }
 body,
 input {
-  color: #222;
+  color: var(--color-darker);
   font-family: sans-serif;
   font-size: 10pt;
 }
+body:not(.js) .when-js,
+.hidden {
+  display: none;
+}
 a {
-  color: #222;
-  text-decoration-color: #c1cfc9;
+  color: var(--color-darker);
+  text-decoration-color: var(--color-medium);
   text-decoration-thickness: 2px;
 }
 a:focus,
 a:hover {
-  text-decoration-color: #222;
+  text-decoration-color: var(--color-darker);
+}
+code {
+  font-family: monospace;
+  white-space: pre;
 }
 .border-bottom {
-  border-bottom: 1px solid #d6e6df;
+  border-bottom: 1px solid var(--color-light);
 }
 .mx-2 {
   margin-left: 2em;
@@ -71,7 +90,7 @@ h2 {
   align-items: start;
 }
 .errorlist li {
-  background: #ffedf5;
+  background: var(--color-error);
 }
 input[type='text'],
 .button,
@@ -81,7 +100,7 @@ input[type='text'],
 }
 input[type='text'],
 .button {
-  border: 1px solid #d6e6df;
+  border: 1px solid var(--color-light);
   padding: 0 0.5em;
 }
 input[type='text'],
@@ -94,6 +113,11 @@ img {
   width: 100%;
   height: auto;
   max-width: 800px;
+  min-height: 200px;
+  color: var(--color-dark);
+  background: var(--color-lighter);
+  text-align: center;
+  line-height: 200px;
 }
 input[type='text'] {
   width: 9em;
@@ -101,7 +125,7 @@ input[type='text'] {
 .button {
   display: inline-block;
   flex-shrink: 0;
-  background: #d6e6df;
+  background: var(--color-light);
   text-align: center;
   text-decoration: none;
   font-style: normal;
@@ -110,8 +134,8 @@ input[type='text'] {
 }
 .button:hover,
 .button:focus {
-  background-color: #c1cfc9;
-  border-color: #c1cfc9;
+  background-color: var(--color-medium);
+  border-color: var(--color-medium);
 }
 .disabled {
   opacity: 0.5;
@@ -119,6 +143,6 @@ input[type='text'] {
 }
 .disabled:hover,
 .disabled:focus {
-  background-color: #d6e6df;
-  border-color: #d6e6df;
+  background-color: var(--color-light);
+  border-color: var(--color-light);
 }

@@ -1,31 +1,18 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{{ changeset.title }}</title>
-    {% load static %}
-    <link
-      rel="stylesheet"
-      href="{% static 'osm_changesets/main.css' %}"
-      type="text/css"
-      media="screen"
-    />
-  </head>
-  <body>
-    <div class="border-bottom">
-      <div class="mx-2 my-3">
-        <div class="max-width-s">
-          <h1 class="my-3">{{ changeset.title }}</h1>
-          <p class="my-1 italics">
-            {{ changeset.created_at|date:"j M Y H:i" }}
-          </p>
-        </div>
-        {% include "changesets/description.html" %}
-      </div>
-    </div>
-    <div class="mx-2 my-3">
-      <a href="{{ form.list_url }}" class="button">back</a>
-    </div>
-  </body>
-</html>
+{% extends "changesets/base.html" %}
+
+{% block title %}{{ changeset.title }}{% endblock %}
+
+{% block heading %}{{ changeset.title }}{% endblock %}
+
+{% block header %}
+<p class="my-1 italics">
+  {{ changeset.created_at|date:"j M Y H:i" }}
+</p>
+{% include "changesets/description.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="mx-2 my-3">
+  <a href="{{ form.list_url }}" class="button">back</a>
+</div>
+{% endblock %}

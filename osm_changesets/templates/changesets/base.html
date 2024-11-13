@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}{% endblock %}
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'osm_changesets/main.css' %}"
+      type="text/css"
+      media="screen"
+    />
+  </head>
+  <body>
+    <div class="border-bottom">
+      <div class="mx-2 my-3">
+        <h1 class="my-3 max-width-s">{% block heading %}{% endblock %}</h1>
+        <p id="loading" class="my-3 when-js hidden">
+          Rendering maps <code id="spinner"></code>
+          <span id="progress">0%</span>
+        </p>
+        {% block header %}{% endblock %}
+      </div>
+    </div>
+    {% block content %}{% endblock %}
+    <script src="{% static 'osm_changesets/main.js' %}"></script>
+  </body>
+</html>
