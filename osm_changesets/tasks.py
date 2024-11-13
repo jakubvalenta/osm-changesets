@@ -11,6 +11,7 @@ app = Celery(
     "tasks",
     broker=settings.CELERY_BROKER,
     broker_connection_retry_on_startup=True,
+    task_time_limit=30,
 )
 
 
