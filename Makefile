@@ -24,6 +24,7 @@ lint:  ## Lint Python code
 
 .PHONY: format
 format:  ## Format Python code
+	poetry run ruff check --select I --fix $(_python_pkg)
 	poetry run ruff format $(_python_pkg)
 
 help:
