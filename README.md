@@ -1,6 +1,9 @@
 # OpenStreetMap Changesets
 
-A website that shows changesets by an OpenStreetMap user with map images.
+A website that shows changesets by an OpenStreetMap user including map images
+and an RSS/Atom feed.
+
+You can find the app at [osm-changesets.ooooo.page](https://osm-changesets.ooooo.page).
 
 ## Installation
 
