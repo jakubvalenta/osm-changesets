@@ -1,4 +1,6 @@
 import datetime
+import json
+import logging
 from urllib.parse import urlencode
 
 import requests
@@ -10,8 +12,9 @@ from django.db.models.query import QuerySet
 from django.http import Http404
 from django.urls import reverse
 
-# from osm_changesets.managers import ChangesetManager
 from osm_changesets.models import Changeset
+
+logger = logging.getLogger(__name__)
 
 
 class ChangesetsForm(forms.Form):
@@ -59,30 +62,32 @@ class ChangesetsForm(forms.Form):
     def list_url(self) -> str:
         return reverse("list") + "?" + self.query_string
 
-    def download_changesets(self):
+    def download_changesets(self) -> None:
         try:
             data = self._call_api()
         except requests.HTTPError as err:
             if err.response.status_code == 404:
                 raise Http404("User not found")
             raise err
-        Changeset.objects.bulk_create(
-            (
-                Changeset(
-                    id=int(item["id"]),
-                    comment=item.get("tags", {}).get("comment", ""),
-                    created_at=datetime.datetime.fromisoformat(item["created_at"]),
-                    max_lat=float(item["max_lat"]),
-                    max_lon=float(item["max_lon"]),
-                    min_lat=float(item["min_lat"]),
-                    min_lon=float(item["min_lon"]),
-                    uid=int(item["uid"]),
-                    display_name=item["user"],
+        changesets: list[Changeset] = []
+        for item in data.get("changesets", []):
+            try:
+                changesets.append(
+                    Changeset(
+                        id=int(item["id"]),
+                        comment=item.get("tags", {}).get("comment", ""),
+                        created_at=datetime.datetime.fromisoformat(item["created_at"]),
+                        max_lat=float(item["max_lat"]),
+                        max_lon=float(item["max_lon"]),
+                        min_lat=float(item["min_lat"]),
+                        min_lon=float(item["min_lon"]),
+                        uid=int(item["uid"]),
+                        display_name=item["user"],
+                    )
                 )
-                for item in data.get("changesets", [])
-            ),
-            ignore_conflicts=True,
-        )
+            except KeyError:
+                logger.warn("Invalid changeset %s", json.dumps(item))
+        Changeset.objects.bulk_create(changesets, ignore_conflicts=True)
 
     def get_changesets(self) -> QuerySet[Changeset, Changeset]:
         display_name = self.cleaned_data["display_name"]
