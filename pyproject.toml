@@ -11,6 +11,7 @@ python = "^3.11"
 celery = {extras = ["redis"], version = "^5.4.0"}
 django-ratelimit = "^4.1.0"
 django = "^5.0.9"
+psycopg2 = "^2.9.9"
 py-staticmaps = "^0.4.0"
 requests = "^2.31.0"
 
