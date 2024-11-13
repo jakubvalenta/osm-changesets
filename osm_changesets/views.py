@@ -118,10 +118,10 @@ class ChangesetRssFeed(Feed):
     def link(self, form: ChangesetsForm) -> str:
         return form.rss_url
 
-    def changeset_pubdate(self, changeset: Changeset) -> datetime.datetime:
+    def item_pubdate(self, changeset: Changeset) -> datetime.datetime:
         return changeset.created_at
 
-    def changeset_title(self, changeset: Changeset) -> str:
+    def item_title(self, changeset: Changeset) -> str:
         return changeset.title
 
     def get_context_data(self, **kwargs) -> dict:
