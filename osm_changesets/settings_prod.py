@@ -14,7 +14,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "osm-changesets",
-        "USER": "osm-changesets",
+        "USER": "robot",
+        "CONN_MAX_AGE": 300,
     }
 }
 CACHES = {
