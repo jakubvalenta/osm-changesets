@@ -51,12 +51,12 @@
 <div class="border-bottom">
   <div class="mx-2 my-3 flex">
     {% if page_obj.has_previous %}
-    <a href="{{ form.list_url }}&page=1" class="button mr-05">&laquo; first</a>
+    <a href="{{ form.list_url }}&page=1" class="button mr-05 hidden-mobile">&laquo; first</a>
     <a href="{{ form.list_url }}&page={{ page_obj.previous_page_number }}" class="button"
       >previous</a
     >
     {% else %}
-    <span class="button disabled mr-05">&laquo; first</span>
+    <span class="button disabled mr-05 hidden-mobile">&laquo; first</span>
     <span class="button disabled">previous</span>
     {% endif %}
     <span class="label mx-2">
@@ -66,12 +66,12 @@
     <a href="{{ form.list_url }}&page={{ page_obj.next_page_number }}" class="button mr-05"
       >next</a
     >
-    <a href="{{ form.list_url }}&page={{ page_obj.paginator.num_pages }}" class="button"
+    <a href="{{ form.list_url }}&page={{ page_obj.paginator.num_pages }}" class="button hidden-mobile"
       >last &raquo;</a
     >
     {% else %}
     <span class="button disabled mr-05">next</span>
-    <span class="button disabled">last &raquo;</span>
+    <span class="button disabled hidden-mobile">last &raquo;</span>
     {% endif %}
   </div>
 </div>

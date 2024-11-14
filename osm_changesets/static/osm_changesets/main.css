@@ -146,3 +146,8 @@ input[type='text'] {
   background-color: var(--color-light);
   border-color: var(--color-light);
 }
+@media screen and (max-width: 767px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
