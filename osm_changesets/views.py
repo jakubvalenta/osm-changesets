@@ -1,10 +1,12 @@
 import datetime
+from urllib.parse import urlencode
 
 from django.contrib.syndication.views import Feed
 from django.core.exceptions import BadRequest
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.feedgenerator import Atom1Feed, SyndicationFeed
 from django.views.generic import DetailView
@@ -135,3 +137,39 @@ class ChangesetAtomFeed(ChangesetRssFeed):
 
     def link(self, form: ChangesetsForm) -> str:
         return form.atom_url
+
+
+def redirect_detail_by_display_name_view(request: HttpRequest, display_name: str, id: int):
+    return redirect(reverse("detail", args=[id]) + "?" + urlencode({"display_name": display_name}))
+
+
+def redirect_detail_by_uid_view(request: HttpRequest, uid: int, id: int):
+    return redirect(reverse("detail", args=[id]) + "?" + urlencode({"uid": uid}))
+
+
+def redirect_list_by_display_name_view(request: HttpRequest, display_name: str):
+    return redirect(reverse("list") + "?" + urlencode({"display_name": display_name}))
+
+
+def redirect_list_by_uid_view(request: HttpRequest, uid: int):
+    return redirect(reverse("list") + "?" + urlencode({"uid": uid}))
+
+
+def redirect_svg_view(request: HttpRequest, uid: int, id: int):
+    return redirect(reverse("svg", args=[id]))
+
+
+def redirect_atom_feed_by_display_name_view(request: HttpRequest, display_name: str):
+    return redirect(reverse("atom") + "?" + urlencode({"display_name": display_name}))
+
+
+def redirect_atom_feed_by_uid_view(request: HttpRequest, uid: int):
+    return redirect(reverse("atom") + "?" + urlencode({"uid": uid}))
+
+
+def redirect_rss_feed_by_display_name_view(request: HttpRequest, display_name: str):
+    return redirect(reverse("rss") + "?" + urlencode({"display_name": display_name}))
+
+
+def redirect_rss_feed_by_uid_view(request: HttpRequest, uid: int):
+    return redirect(reverse("rss") + "?" + urlencode({"uid": uid}))
