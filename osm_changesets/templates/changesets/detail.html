@@ -5,9 +5,6 @@
 {% block heading %}{{ changeset.title }}{% endblock %}
 
 {% block header %}
-<p class="my-1 italics">
-  {{ changeset.created_at|date:"j M Y H:i" }}
-</p>
 {% include "changesets/description.html" %}
 {% endblock %}
 

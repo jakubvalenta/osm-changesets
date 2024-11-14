@@ -37,7 +37,6 @@
     <h2 class="my-3">
       <a href="{{ changeset.get_absolute_url }}">{{ changeset.title }}</a>
     </h2>
-    <p class="my-1 italics">{{ changeset.created_at|date:"j M Y H:i" }}</p>
     {% include "changesets/description.html" %}
   </div>
 </div>

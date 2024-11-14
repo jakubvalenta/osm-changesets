@@ -96,7 +96,7 @@ def changeset_svg(request: HttpRequest, id: int) -> HttpResponse:
 
 
 class ChangesetRssFeed(Feed):
-    description_template = "changesets/description.html"
+    description_template = "changesets/feed_description.html"
 
     @method_decorator(ratelimit(key="header:x-real-ip", rate="60/h", method=["GET"]))
     def get_object(self, request: HttpRequest) -> ChangesetsForm:

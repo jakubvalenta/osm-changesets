@@ -1,0 +1,9 @@
+<img
+  src="{% url 'svg' changeset.id %}"
+  alt="Map of OpenStreetMap changeset {{ changeset.id }}"
+/>
+<p class="my-1">
+  <a href="{{ changeset.osm_url }}"
+    >Go to changeset {{ changeset.id }} at openstreetmap.org</a
+  >
+</p>
